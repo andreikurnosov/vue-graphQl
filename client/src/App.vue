@@ -1,38 +1,52 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+    <v-toolbar fixed color="primary" dark>
+      <v-toolbar-side-icon></v-toolbar-side-icon>
+      <v-toolbar-title class="hidden-xs-only">
+        <router-link to="/" tag="span" style="cursor: pointer">
+          VueShare
+        </router-link>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+
+    <v-text-field flex prepend-icon="search" placeholder="Search posts" color="accent" single-line-hide-details></v-text-field>
+
+    <v-spacer></v-spacer>
+
+    <v-toolbar-items class="hidden-xs-only">
+      <v-btn flat
+      v-for="item in horizontalNavItem"
+      :key="item.title"
+      :to="item.link"
       >
-        <span class="mr-2">Latest Release</span>
+        <v-icon left class="hidden-sm-only">{{item.icon}}</v-icon>
+        {{item.title}}
       </v-btn>
+    </v-toolbar-items>
+
     </v-toolbar>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+
+    <main>
+      <v-container class="mt-4">
+        <router-view />
+      </v-container>
+    </main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
-  data () {
-    return {
-      //
+  export default {
+    name: 'App',
+    computed: {
+      horizontalNavItem() {
+        return [
+          { icon: 'chat', title: 'Posts', link: '/posts' },
+          { icon: 'lock_open', title: 'Sign In', link: '/singin' },
+          { icon: 'create', title: 'Sign Up', link: '/signup' }
+        ]
+      }
     }
   }
-}
 </script>
